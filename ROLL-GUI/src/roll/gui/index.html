@@ -163,7 +163,7 @@
 							<input id="syntactic" type="radio" name="algorithm" value="Syntactic"/> Syntactic
 						</div>
 						<div class="col-md-2">
-							<input id="reccurent" type="radio" name="algorithm" value="Recurrent" /> Recurrent
+							<input id="recurrent" type="radio" name="algorithm" value="Recurrent" /> Recurrent
 						</div>
 						<div class="col-md-2">
 							<input id="ldollar" type="radio" name="algorithm" value="LDollar"/> LDollar
@@ -334,10 +334,10 @@
 			algorithm = "periodic";
 		} else if(document.getElementById("syntactic").checked) {
 			algorithm = "syntactic";
-		} else if(document.getElementById("ldollar").checked){
-			algorithm = "ldollar";
 		} else if(document.getElementById("recurrent").checked) {
 			algorithm = "recurrent";
+		} else if(document.getElementById("ldollar").checked){
+			algorithm = "ldollar";
 		} else {
 			algorithm = "error";
 		}
