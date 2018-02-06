@@ -5,11 +5,13 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import netscape.javascript.JSObject;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+    	
         BorderPane borderPane = new BorderPane();
         WebView webView = new WebView();
         String url = getClass().getResource("index.html").toExternalForm();
@@ -18,10 +20,13 @@ public class Main extends Application {
         borderPane.setCenter(webView);
         final Scene scene = new Scene(borderPane);
         stage.setScene(scene);
-        stage.setHeight(300);
-        stage.setWidth(250);
+        stage.setHeight(768);
+        stage.setWidth(1024);
         stage.show();
-
+        
+        JSObject window = (JSObject) webView.getEngine().executeScript("window");
+        JavaScriptBridge bridge = new JavaScriptBridge();
+        window.setMember("app", bridge);
     }
 
     public static void main(String[] args) {

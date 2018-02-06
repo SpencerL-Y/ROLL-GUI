@@ -110,7 +110,7 @@
             <li><a href="#">btn</a></li>
             </ul>
             <form class="navbar-form navbar-right">
-                <button  class="btn btn-invers" onclick="alert('test');">
+                <button  class="btn btn-invers" onclick="app.callback('What ever you wish');">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                     <!-- Exit -->
                 </button>
@@ -135,7 +135,7 @@
 		<p class="marpad">Input the alphabet and take the role of teacher in learning.</p>
 	</div>
 	<div class="container">
-        <h3>Information for interactive learning :</h3>
+        <h3 id="test">Information for interactive learning :</h3>
            
                 <div class="form-group">
                 <div class="row">
@@ -143,7 +143,7 @@
                     <div class="col-md-10">
                         
 						<input class="form-control" id="alphabet" type="text" >
-						<button id="submitAlpha" class="btn-block btn btn-primary" style="margin-top:10px;">Submit</button>
+						<button id="submitAlpha" class="btn-block btn btn-primary" style="margin-top:10px;" onclick="jsFunction();" >Submit</button>
                     </div>
 				</div>	
                 </div>
@@ -249,12 +249,15 @@
    	editor.setTheme("ace/theme/twilight");
    	
 	
-			
-			
-	
-
+</script>
+<script type="text/javascript">
 "use strict";
-Myrequire("./view.js");
+function jsFunction(){
+	var returnStr = app.getStringFromJava();
+	print(returnStr);
+	document.getElementById("test").innerHTML = returnStr;
+}
+
 	/*
 	*Please keep the ajax method for unreasonable requirement change
 	*/
