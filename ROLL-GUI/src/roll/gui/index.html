@@ -124,7 +124,8 @@
 		<p class="marpad">Input the alphabet and take the role of teacher in learning.</p>
 	</div>
 	<div class="container">
-        <h3 id="test">Information for interactive learning :</h3>
+		<h3 id="status"></h3>
+        <h3>Information for interactive learning :</h3>
             <div class="form-group">
 				<div class="row" style="height:10px"></div>
 				<div class="row">
@@ -186,7 +187,7 @@
 				<div class="row">
 					<div class="col-md-2"></div>
 					<div class="col-md-10">
-						<button id="submitAlpha" class="btn-block btn btn-primary" style="margin-top:10px;" onclick="jsFunction();" >Submit</button>
+						<button id="submitAlpha" class="btn-block btn btn-primary" style="margin-top:10px;" onclick="startPlaying();" >Submit</button>
 					</div>
 				</div>
 			</div>
@@ -312,8 +313,9 @@
    	document.getElementById("table").checked = true;
 	document.getElementById("periodic").checked = true;
 	document.getElementById("under").checked = true;
-	
-	function jsFunction(){
+
+	/*-----------------------Interactive Learning-------------------------*/	
+	function startPlaying(){
 		//get alphabet
 		var alphaNum = document.getElementById("alphaNum").value;
 		var alphabet = document.getElementById("alphabet").value;
@@ -352,11 +354,39 @@
 			approach = "error";
 		}
 	
+	
+		document.getElementById("equiNum").innerHTML = "0" ;
+		document.getElementById("memNum").innerHTML = "0" ;
 		var returnedValue = app.submitOptions(alphaNum, alphabet, dataStructure, algorithm, approach);
-		document.getElementById("test").innerHTML = returnedValue;
+		document.getElementById("status").innerHTML = returnedValue;
+		returnedValue = app.startLearning();
+		document.getElementById("status").innerHTML = returnedValue;
 	}
 	
-	
+	function answerMembershipQuery(answer){
+		if(answer == true){
+			//TODO
+		} else {
+			//TODO
+		}
+	}
+
+	function answerEquivalenceQuery(answer){
+		if(answer == true){
+			//TODO
+		} else {
+			//TODO
+		}
+	}
+
+	/*-----------------------Automatic Learning-------------------------*/
+	function startLearning(){
+		
+	}
+
+
+
+
 			
 	</script>
 </body>
