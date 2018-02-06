@@ -138,15 +138,72 @@
         <h3 id="test">Information for interactive learning :</h3>
            
                 <div class="form-group">
+				<div class="row">
+                    <label class="col-md-2 control-label">Number of letters</label>
+                    <div class="col-md-10">
+						<input class="form-control" id="alphaNum" type="text" >
+                    </div>
+				</div>	
+				<div class="row" style="height:10px"></div>
                 <div class="row">
                     <label class="col-md-2 control-label">Alphabet</label>
                     <div class="col-md-10">
                         
 						<input class="form-control" id="alphabet" type="text" >
-						<button id="submitAlpha" class="btn-block btn btn-primary" style="margin-top:10px;" onclick="jsFunction();" >Submit</button>
+						
                     </div>
 				</div>	
-                </div>
+				<div class="row">
+                    <label class="col-md-2 control-label">Data Structure</label>
+                    <div class="col-md-10">
+						<div class="col-md-2">
+							<input type="radio" name="dataStructure" value="Table" /> Table
+						</div>
+						<div class="col-md-2">
+							<input type="radio" name="dataStructure" value="Tree" /> Tree
+						</div>
+                    </div>
+				</div>
+
+				<div class="row">
+						<label class="col-md-2 control-label">Algorithm</label>
+						<div class="col-md-10">
+							<div class="col-md-2">
+								<input type="radio" name="algorithm" value="Periodic" /> Periodic
+							</div>
+							<div class="col-md-2">
+								<input type="radio" name="algorithm" value="Syntactic"/> Syntactic
+							</div>
+							<div class="col-md-2">
+								<input type="radio" name="algorithm" value="Recurrent" /> Recurrent
+							</div>
+							<div class="col-md-2">
+								<input type="radio" name="algorithm" value="LDollar"/> LDollar
+							</div>
+						</div> 
+				</div>
+
+				<div class="row">
+						<label class="col-md-2 control-label">Approach Method</label>
+						<div class="col-md-10">
+							<div class="col-md-2">
+							<input type="radio" name="approach" value="Under" /> Under
+							</div>
+							<div class="col-md-2">
+							<input type="radio" name="approach" value="Over"/> Over
+							</div>
+						</div> 
+				</div>
+				
+				
+				<div class="row">
+					<div class="col-md-2"></div>
+					<div class="col-md-10">
+							<button id="submitAlpha" class="btn-block btn btn-primary" style="margin-top:10px;" onclick="jsFunction();" >Submit</button>
+					</div>
+				</div>
+				</div>
+				
 			<h3>Interaction :</h3>
             <div class="row">
 			<fieldset disabled>
@@ -178,7 +235,16 @@
 					</div>
 				</div>
 			</fieldset>
-            </div>
+			</div>
+			<div class="row" style="height:10px">
+			<div class="row">
+                    <label class="col-md-2 control-label">Counterexample</label>
+                    <div class="col-md-10">
+                        
+						<input class="form-control" id="counterExample" type="text" >
+						
+                    </div>
+				</div>	
             <div class="row">
 			<div class="form-group">
 				<label class="col-md-2 control-label">Correct Result?</label>

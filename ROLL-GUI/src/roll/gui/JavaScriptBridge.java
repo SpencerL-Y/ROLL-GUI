@@ -13,6 +13,6 @@ public class JavaScriptBridge extends Region {
 	}
 	
 	public String getStringFromJava() {
-		return "This is a string from java";
+		return "Start Learning";
 	}
 }
