@@ -72,17 +72,29 @@ public class JavaScriptBridge extends Region {
 	}
 	
 	public String equiSyncAck() {
-		//TODO
+		this.interactor.equiSyncAck();
 		return null;
 	}
 	
-	public String answerMem(int inLanguange) {
-		//TODO
-		return null;
+	public String answerMem(int inLanguage) {
+		String returnedStr;
+		if(inLanguage == 1) {
+			returnedStr = this.interactor.answerMemQuery(true);
+		} else if(inLanguage == 0) {
+			returnedStr = this.interactor.answerMemQuery(false);
+		} else {
+			System.out.println("answerMem ERROR");
+			returnedStr = null;
+			assert(false);
+		}
+		return returnedStr;
 	}
 	
 	public String answerEqui(int isCorrect, String counterExample) {
 		//TODO
+		if(isCorrect == 1) {
+			this.interactor.answerEquiQuery(true, counterExample);
+		}
 		return null;
 	}
 	

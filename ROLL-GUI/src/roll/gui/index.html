@@ -416,8 +416,8 @@
 			app.answerEqui(1, null);
 			nextStr = "Interactive Learning Complished";
 		} else {
-			
-			app.answerEqui(0, document.getElementById("counterExample").innerHTML);
+			checkCounterExample(document.getElementById("counterExample").value);
+			app.answerEqui(0, document.getElementById("counterExample").value);
 		}
 		return nextStr;
 	}
