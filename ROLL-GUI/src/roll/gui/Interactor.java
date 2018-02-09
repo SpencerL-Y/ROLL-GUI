@@ -4,7 +4,7 @@ public class Interactor {
 	private Algorithm a;
 	private Approach push;
 	private DataStructure ds;
-	private String[] alphabetLetters;
+	private char[] alphabetLetters;
 	private Integer alphabetNumber;
 	
 	public Interactor() {
@@ -13,9 +13,9 @@ public class Interactor {
 		this.ds = DataStructure.TABLE;
 	}
 	
-	public void assignValue(Integer num, String[] letters, Algorithm ago, Approach ap, DataStructure dataStruct) {
+	public void assignValue(Integer num, char[] letters, Algorithm ago, Approach ap, DataStructure dataStruct) {
 		this.alphabetNumber = num;
-		this.alphabetLetters = new String[num];
+		this.alphabetLetters = new char[num];
 		for(int i = 0; i < num; i++) {
 			this.alphabetLetters[i] = letters[i];
 		}

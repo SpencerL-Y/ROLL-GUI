@@ -15,9 +15,6 @@ public class JavaScriptBridge extends Region {
 		Platform.exit();
 	}
 	
-	public void testFunction(String input) {
-		System.out.println(input);
-	}
 	
 	public String submitOptions(String alphaNum, String alphabet, String dataStructure, String algorithm, String approach) {
 //		System.out.println(alphaNum);
@@ -29,11 +26,11 @@ public class JavaScriptBridge extends Region {
 		Approach push = Approach.UNDER;
 		DataStructure ds = DataStructure.TABLE;
 		Integer alphabetNum = Integer.parseInt(alphaNum);
-		String[] alphabetLetters = new String[alphabetNum];
-		alphabetLetters = alphabet.split("\\,");
+		char[] alphabetLetters = new char[alphabetNum];
 		for(int i = 0; i < alphabetNum; i++) {
-			alphabetLetters[i] = alphabetLetters[i].trim();
-			System.out.println(alphabetLetters[i]);
+			alphabetLetters[i] = alphabet.toCharArray()[i];
+			System.out.print(alphabetLetters[i]);
+			System.out.println();
 		}
 		if(dataStructure.equals("tree")) {
 			ds = DataStructure.TREE;
@@ -72,6 +69,21 @@ public class JavaScriptBridge extends Region {
 	public String startLearning() {
 		System.out.println("startLearning");
 		return this.interactor.startLearning();
+	}
+	
+	public String equiSyncAck() {
+		//TODO
+		return null;
+	}
+	
+	public String answerMem(int inLanguange) {
+		//TODO
+		return null;
+	}
+	
+	public String answerEqui(int isCorrect, String counterExample) {
+		//TODO
+		return null;
 	}
 	
 	
