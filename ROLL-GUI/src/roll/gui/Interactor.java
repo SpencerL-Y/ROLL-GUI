@@ -1,5 +1,6 @@
 package roll.gui;
 
+import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
@@ -32,12 +33,76 @@ public class Interactor {
 	
 	public String startLearning() {
 		//TODO add the first interaction and return result to the front end
-		return this.a.toString() + " " + this.push.toString() + " " + this.ds.toString() + " " + this.alphabetNumber;
+		String[] args = new String[4];
+		args[0] = this.getMode();
+		args[1] = this.getDataStructure();
+		args[2] = this.getAlgorithm();
+		args[3] = this.getApproach();
+		ROLL rollInstance = new ROLL(args, this.intIn, this.intOut);
+		rollInstance.run();
+		this.intOut.write(this.alphabetLetters.toString().getBytes());
+		byte[] alphaOK = new byte[1024];
+		int len = this.intIn.read(alphaOK);
+		String alphaOKString = new String(alphaOK, 0, len);
+		assert(alphaOKString != null && alphaOKString.equals("ALPHA OKAY"));
+		this.intOut.write(this.alphabetNumber.toString().getBytes());
+		byte[] buf = new byte[1024];
+		len = this.intIn.read(buf);
+		String returnedStr = new String(buf, 0, len);
+		return returnedStr;
 	}
 	
-	public String answerMemQuery(Boolean isMember) {
+	private String getApproach() {
+		if(this.push == Approach.OVER) {
+			return "-over";
+		} else if(this.push == Approach.UNDER) {
+			return "-under";
+		} else {
+			System.out.println("Approach Error!");
+			return null;
+		}
+	}
+
+	private String getAlgorithm() {
+		if(this.a == Algorithm.PERIODIC) {
+			return "-periodic";
+		} else if(this.a == Algorithm.SYNTACTIC) {
+			return "-syntactic";
+		} else if(this.a == Algorithm.RECURRENT) {
+			return "-recurrent";
+		} else if(this.a == Algorithm.LDOLLAR) {
+			return "-ldollar";
+		} else {
+			System.out.println("Algorithm Error!");
+			assert(false);
+			return null;
+		}
+	}
+
+	private String getDataStructure() {
+		if(this.ds == DataStructure.TABLE) {
+			return "-table";
+		} else if(this.ds == DataStructure.TREE) {
+			return "-tree";
+		} else {
+			System.out.println("DataStructure Error!");
+			assert(false);
+			return null;
+		}
+	}
+
+	private String getMode() {
+		return "-play";
+	}
+
+	public String answerMemQuery(Boolean isMember) throws IOException {
 		//TODO add interaction and return next interaction string to the front end
-		return null;
+		String answerMem = isMember ? "1" : "0";
+		this.intOut.write(answerMem.getBytes());
+		byte[] buf = new byte[1024];
+		int len = this.intIn.read(buf);
+		String returnedStr = new String(buf, 0, len);
+		return returnedStr;
 	}
 	
 	public String answerEquiQuery(Boolean isEqual, String ce) {
@@ -45,9 +110,12 @@ public class Interactor {
 		return null;
 	}
 	
-	public String equiSyncAck() {
+	public String equiSyncAck() throws IOException {
 		//TODO this function tell roll that the first line of equivalence check has been received. Return the hypothesis to the front end.
-		
-		return null;
+		this.intOut.write("A-EquiReady".getBytes());
+		byte[] automata = new byte[8192];
+		int len = this.intIn.read(automata);
+		String automataStr = new String(automata, 0, len);
+		return automataStr;
 	}
 }

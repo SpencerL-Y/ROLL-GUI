@@ -1,5 +1,7 @@
 package roll.gui;
 
+import java.io.IOException;
+
 import javafx.application.Platform;
 import javafx.scene.layout.Region;
 
@@ -63,39 +65,34 @@ public class JavaScriptBridge extends Region {
 
 		this.interactor.assignValue(alphabetNum, alphabetLetters, a, push, ds);
 		System.out.println("submit return");
-		return "Start Okay";
+		return "Start playing";
 	}
 	
-	public String startLearning() {
-		System.out.println("startLearning");
+	public String startLearning() throws IOException {
+		System.out.println("startPlaying");
 		return this.interactor.startLearning();
 	}
 	
-	public String equiSyncAck() {
-		this.interactor.equiSyncAck();
-		return null;
+	public String equiSyncAck() throws IOException {
+		String returnedStr = this.interactor.equiSyncAck();
+		return returnedStr;
 	}
 	
-	public String answerMem(int inLanguage) {
-		String returnedStr;
-		if(inLanguage == 1) {
-			returnedStr = this.interactor.answerMemQuery(true);
-		} else if(inLanguage == 0) {
-			returnedStr = this.interactor.answerMemQuery(false);
-		} else {
-			System.out.println("answerMem ERROR");
-			returnedStr = null;
-			assert(false);
-		}
+	public String answerMem(int inLanguage) throws IOException {
+		boolean isMem = inLanguage == 1? true : false;
+		String returnedStr = this.interactor.answerMemQuery(isMem);
 		return returnedStr;
 	}
 	
 	public String answerEqui(int isCorrect, String counterExample) {
 		//TODO
-		if(isCorrect == 1) {
-			this.interactor.answerEquiQuery(true, counterExample);
+		boolean isEqui = (isCorrect == 1) ? true : false;
+		String returnedStr;
+		if(isEqui) {
+			returnedStr = "F-Playing";
 		}
-		return null;
+		returnedStr = this.interactor.answerEquiQuery(isEqui, counterExample);
+		return returnedStr;
 	}
 	
 	
