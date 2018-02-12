@@ -18,7 +18,7 @@ public class JavaScriptBridge extends Region {
 	}
 	
 	
-	public String submitOptions(String alphaNum, String alphabet, String dataStructure, String algorithm, String approach) {
+	public String submitOptions(String alphaNum, String alphabet, String dataStructure, String algorithm, String approach) throws IOException {
 //		System.out.println(alphaNum);
 //		System.out.println(alphabet);
 //		System.out.println(dataStructure);
@@ -65,7 +65,7 @@ public class JavaScriptBridge extends Region {
 
 		this.interactor.assignValue(alphabetNum, alphabetLetters, a, push, ds);
 		System.out.println("submit return");
-		return "Start playing";
+		return this.interactor.startLearning();
 	}
 	
 	public String startLearning() throws IOException {

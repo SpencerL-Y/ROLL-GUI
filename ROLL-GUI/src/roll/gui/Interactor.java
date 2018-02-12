@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
+import roll.main.ROLL;
+
 public class Interactor {
 	private Algorithm a;
 	private Approach push;
@@ -17,6 +19,8 @@ public class Interactor {
 		this.a = Algorithm.PERIODIC;
 		this.push = Approach.UNDER;
 		this.ds = DataStructure.TABLE;
+		this.intIn = new PipedInputStream();
+		this.intOut = new PipedOutputStream();
 	}
 	
 	public void assignValue(Integer num, char[] letters, Algorithm ago, Approach ap, DataStructure dataStruct) {
@@ -31,24 +35,34 @@ public class Interactor {
 		System.out.println("assign end");
 	}
 	
-	public String startLearning() {
+	public String startLearning() throws IOException {
+		System.out.println("Interactor start learning");
 		//TODO add the first interaction and return result to the front end
 		String[] args = new String[4];
 		args[0] = this.getMode();
 		args[1] = this.getDataStructure();
 		args[2] = this.getAlgorithm();
 		args[3] = this.getApproach();
+		for(int i = 0; i < 4; i++) {
+			System.out.print(" " + args[i]);
+		}
+		System.out.println();
 		ROLL rollInstance = new ROLL(args, this.intIn, this.intOut);
-		rollInstance.run();
+		System.out.println("ROLL instance");
+		//rollInstance.run();
 		this.intOut.write(this.alphabetLetters.toString().getBytes());
+		System.out.println("send alphabet " + this.alphabetLetters.toString());
 		byte[] alphaOK = new byte[1024];
 		int len = this.intIn.read(alphaOK);
 		String alphaOKString = new String(alphaOK, 0, len);
+		System.out.println(alphaOKString);
 		assert(alphaOKString != null && alphaOKString.equals("ALPHA OKAY"));
 		this.intOut.write(this.alphabetNumber.toString().getBytes());
+		System.out.println("send alphanum" + this.alphabetNumber.toString());
 		byte[] buf = new byte[1024];
 		len = this.intIn.read(buf);
 		String returnedStr = new String(buf, 0, len);
+		System.out.println("first returned str" + returnedStr);
 		return returnedStr;
 	}
 	
@@ -92,7 +106,7 @@ public class Interactor {
 	}
 
 	private String getMode() {
-		return "-play";
+		return "-int";
 	}
 
 	public String answerMemQuery(Boolean isMember) throws IOException {
