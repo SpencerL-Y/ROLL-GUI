@@ -62,7 +62,7 @@ public class JavaScriptBridge extends Region {
 			assert(false);
 		}
 		System.out.println("assign begin");
-
+		this.interactor = new Interactor();
 		this.interactor.assignValue(alphabetNum, alphabetLetters, a, push, ds);
 		System.out.println("submit return");
 		return this.interactor.startLearning();
@@ -84,7 +84,7 @@ public class JavaScriptBridge extends Region {
 		return returnedStr;
 	}
 	
-	public String answerEqui(int isCorrect, String counterExample) {
+	public String answerEqui(int isCorrect, String counterExample) throws IOException {
 		//TODO
 		boolean isEqui = (isCorrect == 1) ? true : false;
 		String returnedStr;
@@ -93,6 +93,10 @@ public class JavaScriptBridge extends Region {
 		}
 		returnedStr = this.interactor.answerEquiQuery(isEqui, counterExample);
 		return returnedStr;
+	}
+	
+	public void terminate() {
+		this.interactor = null;
 	}
 	
 	

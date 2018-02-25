@@ -207,10 +207,10 @@
 				<div class="form-group">
 					<label class="col-md-2 control-label">Run Accepted?</label>
 					<div class="col-md-5">
-						<button class=" btn-block btn btn-primary" id="MQButtonY" style="margin-top:10px; margin-bottom:10px;">Yes</button>
+						<button class=" btn-block btn btn-primary" id="MQButtonY" style="margin-top:10px; margin-bottom:10px;" onclick="answerMembershipQuery(true);">Yes</button>
 					</div>
 					<div class="col-md-5">
-						<button class=" btn-block btn btn-primary" id="MQButtonN" style="margin-top:10px; margin-bottom:10px;">No</button>
+						<button class=" btn-block btn btn-primary" id="MQButtonN" style="margin-top:10px; margin-bottom:10px;" onclick="answerMembershipQuery(false);">No</button>
 					</div>
 				</div>
 			</div>
@@ -226,20 +226,31 @@
 
 			<div class="row" style="height:10px"></div>
 			<div class="row">
-                <label class="col-md-2 control-label">Counterexample</label>
-                <div class="col-md-10">
-					<input class="form-control" id="counterExample" type="text" >
-            	</div>
+				<div class="col-md-2">
+					<label class="control-label">CE stem: </label>
+				</div>
+                <div class="col-md-4">
+					<input class="form-control" id="counterExampleStem" type="text" >
+				</div>
+			</div>
+			<div style="height:10px"></div>
+			<div class="row">
+				<div class="col-md-2">
+						<label class="control-label">CE loop:</label>
+				</div>
+				<div class="col-md-4">
+					<input class="form-control" id="counterExampleLoop" type="text" >
+				</div>
 			</div>
 
             <div class="row">
 				<div class="form-group">
 					<label class="col-md-2 control-label">Correct Result?</label>
 					<div class="col-md-5">
-						<button class=" btn-block btn btn-primary" id="EQButtonY" style="margin-top:10px; margin-bottom:10px;">Yes</button>
+						<button class=" btn-block btn btn-primary" id="EQButtonY" style="margin-top:10px; margin-bottom:10px;" onclick="answerEquivalenceQuery(true);">Yes</button>
 					</div>
 					<div class="col-md-5">
-						<button class=" btn-block btn btn-primary" id="EQButtonN" style="margin-top:10px; margin-bottom:10px;">No</button>
+						<button class=" btn-block btn btn-primary" id="EQButtonN" style="margin-top:10px; margin-bottom:10px;" onclick="answerEquivalenceQuery(false);">No</button>
 					</div>
 				</div>
 			</div>
@@ -343,9 +354,20 @@
    	document.getElementById("table").checked = true;
 	document.getElementById("periodic").checked = true;
 	document.getElementById("under").checked = true;
+	document.getElementById("MQButtonY").disabled = "disabled";
+	document.getElementById("MQButtonN").disabled = "disabled";
+	document.getElementById("EQButtonY").disabled = "disabled";
+	document.getElementById("EQButtonN").disabled = "disabled";
+	document.getElementById("submitAlpha").disabled = "";
+	var memNum = 0;
+	var equiNum = 0;
+	var illegalInput = 0;
 
 	/*-----------------------Interactive Learning-------------------------*/	
 	function startPlaying(){
+		document.getElementById("equiQuery").value = "";
+		document.getElementById("memQuery").value= "";
+		document.getElementById("submitAlpha").disabled = "disabled";
 		//get alphabet
 		var alphaNum = document.getElementById("alphaNum").value;
 		var alphabet = checkAlphabet();
@@ -389,24 +411,24 @@
 	
 		document.getElementById("equiNum").innerHTML = "0" ;
 		document.getElementById("memNum").innerHTML = "0" ;
+		equiNum = 0;
+		memNum = 0;
 		var returnedValue = app.submitOptions(alphaNum, alphabet, dataStructure, algorithm, approach);
 		document.getElementById("infoStatus").innerHTML = returnedValue;
-		returnedValue = app.startLearning();
-		document.getElementById("infoStatus").innerHTML = returnedValue;
 		placeReturnedValue(returnedValue);
-		//while(returnedValue[0]  == 'F'){
-		//	var identifier = placeReturnedValue(returnedValue);
-	    //}
 	}
 	
 	function answerMembershipQuery(answer){
 		var nextStr = "next";
-		if(answer == true){
-			app.answerMem(1);
-		} else {
-			app.answerMem(0);
-		}
 		
+		if(answer == true){
+			nextStr = app.answerMem(1);
+		} else {
+			nextStr = app.answerMem(0);
+		}
+		document.getElementById("MQButtonY").disabled = "disabled";
+		document.getElementById("MQButtonN").disabled = "disabled";
+		placeReturnedValue(nextStr);
 		return nextStr;
 	}
 
@@ -415,26 +437,65 @@
 		if(answer == true){
 			app.answerEqui(1, null);
 			nextStr = "Interactive Learning Complished";
+			document.getElementById("submitAlpha").disabled = "";
+			document.getElementById("EQButtonY").disabled = "disabled";
+			document.getElementById("EQButtonN").disabled = "disabled";
+			app.terminate();
 		} else {
-			checkCounterExample(document.getElementById("counterExample").value);
-			app.answerEqui(0, document.getElementById("counterExample").value);
+			if(illegalInput){
+				nextStr = app.answerEquivalenceQueryAgain(document.getElementById("counterExampleStem").value + "," + document.getElementById("counterExampleLoop").value);
+			} else {
+				nextStr = app.answerEqui(0, document.getElementById("counterExampleStem").value + "," + document.getElementById("counterExampleLoop").value);
+			}
+			document.getElementById("EQButtonY").disabled = "disabled";
+			document.getElementById("EQButtonN").disabled = "disabled";
+			document.getElementById("counterExampleLoop").value = "";
+			document.getElementById("counterExampleStem").value = "";
+			placeReturnedValue(nextStr);
 		}
+		
 		return nextStr;
 	}
 
 	function placeReturnedValue(src){
 		if(src[0]=='E'){
-			document.getElementById("equiQuery").innerHTML += src;
+			illegalInput = 0;
+			document.getElementById("EQButtonY").disabled = "";
+			document.getElementById("EQButtonN").disabled = "";
+			document.getElementById("infoStatus").innerHTML = "Please answer Equivalence Query";
+			document.getElementById("equiQuery").value += src;
+			equiNum += 1;
+			document.getElementById("equiNum").innerHTML = equiNum;
+			
 			return 'E';
 		} else if(src[0] == 'S'){
-			document.getElementById("equiQuery").innerHTML = src;
+			illegalInput = 0;
+			var appendStr;
+			document.getElementById("infoStatus").innerHTML = "Synchronize Equivalence Query";
+			appendStr = app.equiSyncAck();
+			var e = placeReturnedValue(appendStr);
+			assert(e == 'E');
 			return 'S';
 		} else if(src[0] == 'M'){
+			illegalInput = 0;
+			document.getElementById("MQButtonY").disabled = "";
+			document.getElementById("MQButtonN").disabled = "";
 			document.getElementById("memQuery").innerHTML = src;
+			document.getElementById("infoStatus").innerHTML = "Please answer Membership Query";
+			document.getElementById("memQuery").value = src.slice(2);
+			memNum += 1;
+			document.getElementById("memNum").innerHTML = memNum;
 			return 'M';
-		} else {
-			document.getElementById("memQuery").innerHTML = src;
-			return '0';
+		} else if(src[0] == 'F'){
+			illegalInput = 0;
+			document.getElementById("infoStatus").innerHTML = "Learning Procedure finished";
+			return 'F';
+		} else if(src[0] == "I"){
+			illegalInput = 1;
+			document.getElementById("EQButtonY").disabled = "disabled";
+			document.getElementById("EQButtonN").disabled = "";
+			document.getElementById("infoStatus").innerHTML = "Counterexample format error! Please answer EQ again!";
+			return 'I';
 		}
 	}
 
@@ -464,7 +525,6 @@
 		}
 		return returnStr;
 	}
-
 	/*-----------------------Automatic Learning-------------------------*/
 	function startLearning(){
 		
