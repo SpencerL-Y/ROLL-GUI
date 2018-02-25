@@ -95,6 +95,10 @@ public class JavaScriptBridge extends Region {
 		return returnedStr;
 	}
 	
+	public String answerEquiAgain(String ce) throws IOException {
+		return this.interactor.answerEquiQueryAgain(ce);
+	}
+	
 	public void terminate() {
 		this.interactor = null;
 	}

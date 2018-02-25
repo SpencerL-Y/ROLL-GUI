@@ -136,26 +136,25 @@ public class Interactor {
 		if(isEqual == false) {
 			byte[] returnedBytes = new byte[1024];
 			System.out.println("counterexample: " + ce);
-			String[] splittedCounterExample = ce.split("\\,");
-			String stem = splittedCounterExample[0];
-			String loop = splittedCounterExample[1];
-			this.intOut.write(stem.getBytes());
+			this.intOut.write(ce.getBytes());
 			this.intOut.flush();
 			int len = this.intIn.read(returnedBytes);
 			returnedStr = new String(returnedBytes, 0, len);
-			if(returnedStr.toCharArray()[0] == 'I') {
-				return returnedStr;
-			} else {
-				this.intOut.write(loop.getBytes());
-				this.intOut.flush();
-				len = this.intIn.read(returnedBytes);
-				returnedStr = new String(returnedBytes, 0, len);
-				return returnedStr;
-			}
-			
+			return returnedStr;
 		} else {
 			return returnedStr;
 		}
+	}
+	
+	public String answerEquiQueryAgain(String ce) throws IOException {
+		byte[] returnedBytes = new byte[1024];
+		System.out.println("counterexample: " + ce);
+		this.intOut.write(ce.getBytes());
+		this.intOut.flush();
+		int len = this.intIn.read(returnedBytes);
+		String returnedStr = new String(returnedBytes, 0, len);
+		return returnedStr;
+		
 	}
 	
 	public String equiSyncAck() throws IOException {

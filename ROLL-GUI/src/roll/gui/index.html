@@ -443,7 +443,7 @@
 			app.terminate();
 		} else {
 			if(illegalInput){
-				nextStr = app.answerEquivalenceQueryAgain(document.getElementById("counterExampleStem").value + "," + document.getElementById("counterExampleLoop").value);
+				nextStr = app.answerEquiAgain(document.getElementById("counterExampleStem").value + "," + document.getElementById("counterExampleLoop").value);
 			} else {
 				nextStr = app.answerEqui(0, document.getElementById("counterExampleStem").value + "," + document.getElementById("counterExampleLoop").value);
 			}
@@ -495,6 +495,8 @@
 			document.getElementById("EQButtonY").disabled = "disabled";
 			document.getElementById("EQButtonN").disabled = "";
 			document.getElementById("infoStatus").innerHTML = "Counterexample format error! Please answer EQ again!";
+			document.getElementById("counterExampleLoop").value = "";
+			document.getElementById("counterExampleStem").value = "";
 			return 'I';
 		}
 	}
