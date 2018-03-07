@@ -224,6 +224,15 @@
 				</div>
 			</div>
 
+			<div class="row">
+				<div class="form-group">
+					<label for="EQuery" class="col-md-2 control-label">EQ Pic</label>
+					<div class="col-md-10">
+						<div id="displayArea"></div>
+					</div>
+				</div>
+			</div>
+
 			<div class="row" style="height:10px"></div>
 			<div class="row">
 				<div class="col-md-2">
@@ -315,7 +324,12 @@
 
 <script src="plugins/ace-builds-master/src-noconflict/ace.js" type="text/javascript"></script>
 <script src="js/d3.js"></script>
-
+<script src="./viz.js"></script>
+<script>
+    
+document.getElementById("displayArea").innerHTML = Viz("digraph { a -> b; }");
+    
+</script>
 
 <script>
 	"use strict";
@@ -542,6 +556,7 @@
 
 			
 	</script>
+	
 </body>
 
 </html>
