@@ -449,6 +449,7 @@ document.getElementById("displayArea").innerHTML = Viz("digraph { a -> b; }");
 
 	function answerEquivalenceQuery(answer){
 		var nextStr = "next";
+
 		if(answer == true){
 			app.answerEqui(1, null);
 			nextStr = "Interactive Learning Complished";
@@ -458,6 +459,9 @@ document.getElementById("displayArea").innerHTML = Viz("digraph { a -> b; }");
 			document.getElementById("infoStatus").innerHTML = "Learning Procedure finished";
 			app.terminate();
 		} else {
+			if(!checkCounterExample()){
+				return;
+			}
 			if(illegalInput){
 				nextStr = app.answerEquiAgain(document.getElementById("counterExampleStem").value + "," + document.getElementById("counterExampleLoop").value);
 			} else {
@@ -546,6 +550,19 @@ document.getElementById("displayArea").innerHTML = Viz("digraph { a -> b; }");
 		}
 		return returnStr;
 	}
+
+	function checkCounterExample(){
+		var stem = document.getElementById("counterExampleStem").value;
+		var loop = document.getElementById("counterExampleLoop").value;
+		if(stem == "" && loop == ""){
+			document.getElementById("infoStatus").innerHTML = "ERROR: Counterexample not valid, please input again.";
+			return false;
+		}
+		return true;
+
+	}
+
+
 	/*-----------------------Automatic Learning-------------------------*/
 	function startLearning(){
 		
