@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import netscape.javascript.JSObject;
 
 public class Main extends Application {
-
+	public static JavaScriptBridge bridge;
     @Override
     public void start(Stage stage) throws Exception {
     	
@@ -25,7 +25,7 @@ public class Main extends Application {
         stage.show();
         
         JSObject window = (JSObject) webView.getEngine().executeScript("window");
-        JavaScriptBridge bridge = new JavaScriptBridge();
+        bridge = new JavaScriptBridge();
         window.setMember("app", bridge);
     }
 

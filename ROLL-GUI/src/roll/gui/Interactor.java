@@ -12,16 +12,18 @@ public class Interactor {
 	private DataStructure ds;
 	private char[] alphabetLetters;
 	private Integer alphabetNumber;
-	private PipedInputStream intIn;
-	private PipedOutputStream intOut;
+	static private PipedInputStream intIn;
+	static private PipedOutputStream intOut;
+	public static ROLL roll;
 	
 	public Interactor() {
 		this.alphabetNumber = new Integer(0);
 		this.a = Algorithm.PERIODIC;
 		this.push = Approach.UNDER;
 		this.ds = DataStructure.TABLE;
-		this.intIn = new PipedInputStream();
-		this.intOut = new PipedOutputStream();
+		Interactor.intIn = new PipedInputStream();
+		Interactor.intOut = new PipedOutputStream();
+		Interactor.roll = null;
 	}
 	
 	public void assignValue(Integer num, char[] letters, Algorithm ago, Approach ap, DataStructure dataStruct) {
@@ -47,27 +49,27 @@ public class Interactor {
 		for(int i = 0; i < 4; i++) {
 			System.out.print(" " + args[i]);
 		}
-		ROLL rollInstance = new ROLL(args, this.intIn, this.intOut);
+		Interactor.roll = new ROLL(args, Interactor.intIn, Interactor.intOut);
 		System.out.println();
 		System.out.println("ROLL instance");
-		rollInstance.start();
+		Interactor.roll.start();
 		String alphabetStr = "";
 		for(int i = 0; i < this.alphabetNumber; i++) {
 			alphabetStr += alphabetLetters[i];
 		}
-		this.intOut.write(alphabetStr.getBytes());
-		this.intOut.flush();
+		Interactor.intOut.write(alphabetStr.getBytes());
+		Interactor.intOut.flush();
 		System.out.println("send alphabet " + alphabetStr);
 		byte[] alphaOK = new byte[1024];
-		int len = this.intIn.read(alphaOK);
+		int len = Interactor.intIn.read(alphaOK);
 		String alphaOKString = new String(alphaOK, 0, len);
 		System.out.println(alphaOKString);
 		assert(alphaOKString != null);
-		this.intOut.write(this.alphabetNumber.toString().getBytes());
-		this.intOut.flush();
+		Interactor.intOut.write(this.alphabetNumber.toString().getBytes());
+		Interactor.intOut.flush();
 		System.out.println("send alphanum " + this.alphabetNumber.toString());
 		byte[] buf = new byte[1024];
-		len = this.intIn.read(buf);
+		len = Interactor.intIn.read(buf);
 		String returnedStr = new String(buf, 0, len);
 		System.out.println("first returned str" + returnedStr);
 		return returnedStr;
@@ -119,10 +121,11 @@ public class Interactor {
 	public String answerMemQuery(Boolean isMember) throws IOException {
 		//TODO add interaction and return next interaction string to the front end
 		String answerMem = isMember ? "1" : "0";
-		this.intOut.write(answerMem.getBytes());
-		this.intOut.flush();
-		byte[] buf = new byte[1024];
-		int len = this.intIn.read(buf);
+		Interactor.intOut.write(answerMem.getBytes());
+		Interactor.intOut.flush();
+		System.out.println("answerMem");
+		byte[] buf = new byte[4096];
+		int len = Interactor.intIn.read(buf);
 		String returnedStr = new String(buf, 0, len);
 		return returnedStr;
 	}
@@ -131,14 +134,19 @@ public class Interactor {
 		//TODO add interaction. return the next interaction if isEqual is false, otherwise end the learning procedure
 		String returnedStr = null;
 		String answerEqui = isEqual ? "1" : "0";
-		this.intOut.write(answerEqui.getBytes());
-		this.intOut.flush();
+		Interactor.intOut.write(answerEqui.getBytes());
+		Interactor.intOut.flush();
 		if(isEqual == false) {
+			byte[] syncBytes = new byte[1024];
 			byte[] returnedBytes = new byte[1024];
+			int len = Interactor.intIn.read(syncBytes);
+			String syncStr = new String(syncBytes, 0, len);
+			assert(syncStr.toCharArray()[0] == 'S');
+			System.out.println(syncStr);
 			System.out.println("counterexample: " + ce);
-			this.intOut.write(ce.getBytes());
-			this.intOut.flush();
-			int len = this.intIn.read(returnedBytes);
+			Interactor.intOut.write(ce.getBytes());
+			Interactor.intOut.flush();
+			len = Interactor.intIn.read(returnedBytes);
 			returnedStr = new String(returnedBytes, 0, len);
 			return returnedStr;
 		} else {
@@ -149,9 +157,9 @@ public class Interactor {
 	public String answerEquiQueryAgain(String ce) throws IOException {
 		byte[] returnedBytes = new byte[1024];
 		System.out.println("counterexample: " + ce);
-		this.intOut.write(ce.getBytes());
-		this.intOut.flush();
-		int len = this.intIn.read(returnedBytes);
+		Interactor.intOut.write(ce.getBytes());
+		Interactor.intOut.flush();
+		int len = Interactor.intIn.read(returnedBytes);
 		String returnedStr = new String(returnedBytes, 0, len);
 		return returnedStr;
 		
@@ -159,10 +167,10 @@ public class Interactor {
 	
 	public String equiSyncAck() throws IOException {
 		//TODO this function tell roll that the first line of equivalence check has been received. Return the hypothesis to the front end.
-		this.intOut.write("A-EquiReady".getBytes());
-		this.intOut.flush();
+		Interactor.intOut.write("A-EquiReady".getBytes());
+		Interactor.intOut.flush();
 		byte[] automata = new byte[8192];
-		int len = this.intIn.read(automata);
+		int len = Interactor.intIn.read(automata);
 		String automataStr = new String(automata, 0, len);
 		return automataStr;
 	}

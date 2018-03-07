@@ -428,6 +428,7 @@
 		}
 		document.getElementById("MQButtonY").disabled = "disabled";
 		document.getElementById("MQButtonN").disabled = "disabled";
+		document.getElementById("infoStatus").innerHTML = nextStr;
 		placeReturnedValue(nextStr);
 		return nextStr;
 	}
@@ -440,6 +441,7 @@
 			document.getElementById("submitAlpha").disabled = "";
 			document.getElementById("EQButtonY").disabled = "disabled";
 			document.getElementById("EQButtonN").disabled = "disabled";
+			document.getElementById("infoStatus").innerHTML = "Learning Procedure finished";
 			app.terminate();
 		} else {
 			if(illegalInput){
@@ -451,6 +453,7 @@
 			document.getElementById("EQButtonN").disabled = "disabled";
 			document.getElementById("counterExampleLoop").value = "";
 			document.getElementById("counterExampleStem").value = "";
+			document.getElementById("infoStatus").innerHTML = "EquiAns over";
 			placeReturnedValue(nextStr);
 		}
 		
@@ -458,12 +461,14 @@
 	}
 
 	function placeReturnedValue(src){
+		
+		document.getElementById("infoStatus").innerHTML = "Place: next string is " + src;
 		if(src[0]=='E'){
 			illegalInput = 0;
 			document.getElementById("EQButtonY").disabled = "";
 			document.getElementById("EQButtonN").disabled = "";
 			document.getElementById("infoStatus").innerHTML = "Please answer Equivalence Query";
-			document.getElementById("equiQuery").value += src;
+			document.getElementById("equiQuery").value = src;
 			equiNum += 1;
 			document.getElementById("equiNum").innerHTML = equiNum;
 			
