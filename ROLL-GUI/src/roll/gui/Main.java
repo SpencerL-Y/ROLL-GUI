@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import netscape.javascript.JSObject;
 
 public class Main extends Application {
-	public static JavaScriptBridge bridge;
+	public JavaScriptBridge bridge;
     @Override
     public void start(Stage stage) throws Exception {
     	

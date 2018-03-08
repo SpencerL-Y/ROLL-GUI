@@ -1,7 +1,0 @@
-E-digraph {
-  0 [label="0", shape = circle];
-  0 -> 0 [label="b"];
-  0 -> 0 [label="a"];
-  1 [label="", shape = plaintext];
-  1 -> 0 [label=""];
-}

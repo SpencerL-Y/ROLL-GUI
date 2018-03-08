@@ -6,11 +6,11 @@ import javafx.application.Platform;
 import javafx.scene.layout.Region;
 
 public class JavaScriptBridge extends Region {
-	private static Interactor interactor;
+	private Interactor interactor;
 	
 	
 	public JavaScriptBridge() {
-		JavaScriptBridge.interactor = new Interactor();
+		this.interactor = new Interactor();
 	}
 	
 	public void callback(String data) {
@@ -62,26 +62,26 @@ public class JavaScriptBridge extends Region {
 			assert(false);
 		}
 		System.out.println("assign begin");
-		JavaScriptBridge.interactor = new Interactor();
-		JavaScriptBridge.interactor.assignValue(alphabetNum, alphabetLetters, a, push, ds);
+		this.interactor = new Interactor();
+		this.interactor.assignValue(alphabetNum, alphabetLetters, a, push, ds);
 		System.out.println("submit return");
-		return JavaScriptBridge.interactor.startLearning();
+		return this.interactor.startLearning();
 	}
 	
 	public String startLearning() throws IOException {
 		System.out.println("startPlaying");
-		return JavaScriptBridge.interactor.startLearning();
+		return this.interactor.startLearning();
 	}
 	
 	public String equiSyncAck() throws IOException {
-		String returnedStr = JavaScriptBridge.interactor.equiSyncAck();
+		String returnedStr = this.interactor.equiSyncAck();
 		return returnedStr;
 	}
 	
 	public String answerMem(int inLanguage) throws IOException {
 		boolean isMem = inLanguage == 1? true : false;
 		System.out.println("answerMem");
-		String returnedStr = JavaScriptBridge.interactor.answerMemQuery(isMem);
+		String returnedStr = this.interactor.answerMemQuery(isMem);
 		return returnedStr;
 	}
 	
@@ -94,16 +94,16 @@ public class JavaScriptBridge extends Region {
 		}
 
 		System.out.println("answerEqui");
-		returnedStr = JavaScriptBridge.interactor.answerEquiQuery(isEqui, counterExample);
+		returnedStr = this.interactor.answerEquiQuery(isEqui, counterExample);
 		return returnedStr;
 	}
 	
 	public String answerEquiAgain(String ce) throws IOException {
-		return JavaScriptBridge.interactor.answerEquiQueryAgain(ce);
+		return this.interactor.answerEquiQueryAgain(ce);
 	}
 	
 	public void terminate() {
-		JavaScriptBridge.interactor = null;
+		this.interactor = null;
 	}
 	
 	
