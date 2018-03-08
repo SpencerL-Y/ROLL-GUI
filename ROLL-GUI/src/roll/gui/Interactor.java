@@ -82,11 +82,13 @@ public class Interactor {
 			byte[] returnedBytes = new byte[1024];
 			this.intIn.read(returnedBytes);
 			assert(new String(returnedBytes, 0, len).charAt(0) == 'E');
+			//TODO: change the path when release
 			String pathname = "C:\\Users\\10244\\Desktop\\testFile.txt";
 			File filename = new File(pathname);
 			InputStreamReader reader = new InputStreamReader(
 						new FileInputStream(filename)
 					);
+			@SuppressWarnings("resource")
 			BufferedReader br = new BufferedReader(reader);
 			String line = "";
 			System.out.println("read from file");
@@ -163,7 +165,7 @@ public class Interactor {
 			this.intIn.read(returnedBytes);
 			assert(new String(returnedBytes, 0, len).charAt(0) == 'E');
 			//TODO: change the path when release
-			String pathname = "testFile.txt";
+			String pathname = "C:\\Users\\10244\\Desktop\\testFile.txt";
 			File filename = new File(pathname);
 			InputStreamReader reader = new InputStreamReader(
 						new FileInputStream(filename)
