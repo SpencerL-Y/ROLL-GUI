@@ -75,8 +75,32 @@ public class Interactor {
 		byte[] buf = new byte[1024];
 		len = Interactor.intIn.read(buf);
 		String returnedStr = new String(buf, 0, len);
-		System.out.println("first returned str" + returnedStr);
-		return returnedStr;
+		if(returnedStr.toCharArray()[0] == 'S') {
+			returnedStr = "";
+			Interactor.intOut.write("A-acknowledged".getBytes());
+			Interactor.intOut.flush();
+			byte[] returnedBytes = new byte[1024];
+			Interactor.intIn.read(returnedBytes);
+			assert(new String(returnedBytes, 0, len).charAt(0) == 'E');
+			String pathname = "C:\\Users\\10244\\Desktop\\testFile.txt";
+			File filename = new File(pathname);
+			InputStreamReader reader = new InputStreamReader(
+						new FileInputStream(filename)
+					);
+			BufferedReader br = new BufferedReader(reader);
+			String line = "";
+			System.out.println("read from file");
+			while(line != null) {
+				returnedStr +=  line;
+				System.out.print(line);
+				line = br.readLine();
+			}
+			System.out.println("first returned str" + returnedStr);
+			return returnedStr;
+		} else {
+			System.out.println("first returned str" + returnedStr);
+			return returnedStr;
+		}
 	}
 	
 	private String getApproach() {
@@ -134,6 +158,7 @@ public class Interactor {
 		if(returnedStr.toCharArray()[0] == 'S') {
 			returnedStr = "";
 			Interactor.intOut.write("A-acknowledged".getBytes());
+			Interactor.intOut.flush();
 			byte[] returnedBytes = new byte[1024];
 			Interactor.intIn.read(returnedBytes);
 			assert(new String(returnedBytes, 0, len).charAt(0) == 'E');
