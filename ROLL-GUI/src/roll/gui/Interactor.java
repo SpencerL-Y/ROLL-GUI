@@ -1,6 +1,10 @@
 package roll.gui;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
@@ -127,13 +131,37 @@ public class Interactor {
 		byte[] buf = new byte[4096];
 		int len = Interactor.intIn.read(buf);
 		String returnedStr = new String(buf, 0, len);
-		return returnedStr;
+		if(returnedStr.toCharArray()[0] == 'S') {
+			returnedStr = "";
+			Interactor.intOut.write("A-acknowledged".getBytes());
+			byte[] returnedBytes = new byte[1024];
+			Interactor.intIn.read(returnedBytes);
+			assert(new String(returnedBytes, 0, len).charAt(0) == 'E');
+			String pathname = "C:\\Users\\10244\\Desktop\\testFile.txt";
+			File filename = new File(pathname);
+			InputStreamReader reader = new InputStreamReader(
+						new FileInputStream(filename)
+					);
+			BufferedReader br = new BufferedReader(reader);
+			String line = "";
+			System.out.println("read from file");
+			while(line != null) {
+				returnedStr +=  line;
+				System.out.print(line);
+				line = br.readLine();
+			}
+			return returnedStr;
+		} else {
+			return returnedStr;
+		}
+		
 	}
 	
 	public String answerEquiQuery(Boolean isEqual, String ce) throws IOException {
 		//TODO add interaction. return the next interaction if isEqual is false, otherwise end the learning procedure
 		String returnedStr = null;
 		String answerEqui = isEqual ? "1" : "0";
+		System.out.println("input number " + answerEqui);
 		Interactor.intOut.write(answerEqui.getBytes());
 		Interactor.intOut.flush();
 		if(isEqual == false) {
@@ -156,11 +184,11 @@ public class Interactor {
 	
 	public String answerEquiQueryAgain(String ce) throws IOException {
 		byte[] returnedBytes = new byte[1024];
+		String returnedStr = null;
 		System.out.println("counterexample: " + ce);
 		Interactor.intOut.write(ce.getBytes());
 		Interactor.intOut.flush();
 		int len = Interactor.intIn.read(returnedBytes);
-		String returnedStr = new String(returnedBytes, 0, len);
 		return returnedStr;
 		
 	}

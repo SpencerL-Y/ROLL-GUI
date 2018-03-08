@@ -219,11 +219,12 @@
 				<div class="form-group">
 					<label for="EQuery" class="col-md-2 control-label">EquivalenceQuery &nbsp;<span class="badge" id="equiNum">0</span></label>
 					<div class="col-md-10">
-						<textarea type="text" id="equiQuery" class="form-control" placeholder="EQ" rows="15"></textarea>
+						<textarea type="text" id="equiQuery" class="form-control" placeholder="EQ" rows="3"></textarea>
 					</div>
 				</div>
 			</div>
 
+			<div class="row" style="height:10px"></div>
 			<div class="row">
 				<div class="form-group">
 					<label for="EQuery" class="col-md-2 control-label">EQ Pic</label>
@@ -394,7 +395,7 @@ document.getElementById("displayArea").innerHTML = Viz("digraph { a -> b; }");
 			dataStructure = "tree";
 		} else if(document.getElementById("table").checked){
 			dataStructure = "table";
-		} else {
+		} else {//
 			dataStructure = "error";
 		}
 	
@@ -442,7 +443,10 @@ document.getElementById("displayArea").innerHTML = Viz("digraph { a -> b; }");
 		}
 		document.getElementById("MQButtonY").disabled = "disabled";
 		document.getElementById("MQButtonN").disabled = "disabled";
-		document.getElementById("infoStatus").innerHTML = nextStr;
+		if(nextStr[0] == 'E'){
+		} else {
+			document.getElementById("infoStatus").innerHTML = nextStr;
+		}
 		placeReturnedValue(nextStr);
 		return nextStr;
 	}
@@ -489,7 +493,7 @@ document.getElementById("displayArea").innerHTML = Viz("digraph { a -> b; }");
 			document.getElementById("equiQuery").value = src;
 			equiNum += 1;
 			document.getElementById("equiNum").innerHTML = equiNum;
-			
+			document.getElementById("displayArea").innerHTML = Viz(src.slice(2));
 			return 'E';
 		} else if(src[0] == 'S'){
 			illegalInput = 0;
@@ -521,6 +525,9 @@ document.getElementById("displayArea").innerHTML = Viz("digraph { a -> b; }");
 			document.getElementById("counterExampleLoop").value = "";
 			document.getElementById("counterExampleStem").value = "";
 			return 'I';
+		} else {
+			document.getElementById("infoStatus").innerHTML = "I got here and I dont know what to do";
+			document.getElementById("equiQuery").value = src;
 		}
 	}
 
@@ -561,6 +568,7 @@ document.getElementById("displayArea").innerHTML = Viz("digraph { a -> b; }");
 		return true;
 
 	}
+
 
 
 	/*-----------------------Automatic Learning-------------------------*/
