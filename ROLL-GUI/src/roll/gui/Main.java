@@ -3,21 +3,26 @@ package roll.gui;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import netscape.javascript.JSObject;
 
 public class Main extends Application {
 	public JavaScriptBridge bridge;
     @Override
     public void start(Stage stage) throws Exception {
-    	
+    	stage.initStyle(StageStyle.DECORATED);
+    	stage.setTitle("ROLL");
         BorderPane borderPane = new BorderPane();
         WebView webView = new WebView();
         String url = getClass().getResource("index.html").toExternalForm();
         System.out.println(url);
         webView.getEngine().load(url);
+  
         borderPane.setCenter(webView);
+        
         final Scene scene = new Scene(borderPane);
         stage.setScene(scene);
         stage.setHeight(768);

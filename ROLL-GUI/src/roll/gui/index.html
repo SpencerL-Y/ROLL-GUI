@@ -66,7 +66,7 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top">
     	<div class="container-fluid">
        	  <a class="navbar-brand" href="#">ROLL</a>
-            <ul class="nav navbar-nav">
+            <!--<ul class="nav navbar-nav">
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"  href="#">Drop<span class="caret"></span></a>
                 <ul class="dropdown-menu">
 					<li><a href="#">link</a></li>
@@ -98,7 +98,7 @@
             <li class="pull-right"><a href="#">btn</a></li>
             <li><a href="#">btn</a></li>
             <li><a href="#">btn</a></li>
-            </ul>
+            </ul>-->
             <form class="navbar-form navbar-right">
                 <button  class="btn btn-invers" onclick="app.callback('What ever you wish');">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -120,9 +120,10 @@
 <!--interactive mode-->
 <div id="interactive">
 	<div class="container">
-        <h3>Information for interactive learning :</h3>
+		<div id="configuration">
+        	<h3>Configure your learning :</h3>
             <div class="form-group">
-				<div class="row" style="height:10px"></div>
+				<div class="row" style="height:15px"></div>
 				<div class="row">
                     <label class="col-md-2 control-label">Number of letters</label>
                     <div class="col-md-10">
@@ -136,7 +137,7 @@
 						<input class="form-control" id="alphabet" type="text" >
                     </div>
 				</div>	
-				<div class="row" style="height:10px"></div>
+				<div class="row" style="height:15px"></div>
 				<div class="row">
                     <label class="col-md-2 control-label">Data Structure</label>
                     <div class="col-md-10">
@@ -148,7 +149,7 @@
 						</div>
                     </div>
 				</div>
-
+				<div class="row" style="height:15px"></div>
 				<div class="row">
 					<label class="col-md-2 control-label">Algorithm</label>
 					<div class="col-md-10">
@@ -166,7 +167,7 @@
 						</div>
 					</div> 
 				</div>
-
+				<div class="row" style="height:15px"></div>
 				<div class="row">
 					<label class="col-md-2 control-label">Approach Method</label>
 					<div class="col-md-10">
@@ -178,7 +179,7 @@
 						</div>
 					</div> 
 				</div>
-				
+				<div class="row" style="height:15px"></div>
 				<div class="row">
 					<div class="col-md-2"></div>
 					<div class="col-md-10">
@@ -186,84 +187,95 @@
 					</div>
 				</div>
 			</div>
+		</div>
+		<div id="debugBox">
 			<div class="row">
-				<div class="col-md-2"></div>
+				<label class="col-md-2 control-label">Status:</label>
 				<div class="col-md-10">
-					<h4 id="infoStatus" style="text-align:center; font-family:Courier New, Courier, monospace">Currently Nothing</h4>
+					<h4 id="infoStatus" style="text-align:center; font-family:Courier New, Courier, monospace; " >Currently Nothing</h4>
 				</div>
 				<div class="col-md-2"></div>
 			</div>
+		</div>
+		<div class="interactBox">
 			<h3>Interaction :</h3>
             <div class="row">
-				<div class="form-group">
-					<label for="MQuery" class="col-md-2 control-label">MembershipQuery &nbsp;<span class="badge" id="memNum">0</span></label>
-					<div class="col-md-10">
-						<input type="text" id="memQuery" class="form-control" placeholder="MQ">
-					</div>
+				<div class="col-md-12">
+					<label for="MQuery" class="control-label">MembershipQuery &nbsp;<span class="badge" id="memNum">0</span></label>
+				</div>
+				<div class="col-md-12">
+					<input type="text" id="memQuery" class="form-control" placeholder="MQ">
 				</div>
 			</div>
-			
+			<div class="row">
+				<label class="col-md-2 control-label">Run Accepted?</label>
+			</div>
             <div class="row">
 				<div class="form-group">
-					<label class="col-md-2 control-label">Run Accepted?</label>
-					<div class="col-md-5">
+					
+					<div class="col-md-6">
 						<button class=" btn-block btn btn-primary" id="MQButtonY" style="margin-top:10px; margin-bottom:10px;" onclick="answerMembershipQuery(true);">Yes</button>
 					</div>
-					<div class="col-md-5">
+					<div class="col-md-6">
 						<button class=" btn-block btn btn-primary" id="MQButtonN" style="margin-top:10px; margin-bottom:10px;" onclick="answerMembershipQuery(false);">No</button>
 					</div>
 				</div>
 			</div>
 
 			<div class="row">
-				<div class="form-group">
-					<label for="EQuery" class="col-md-2 control-label">EquivalenceQuery &nbsp;<span class="badge" id="equiNum">0</span></label>
-					<div class="col-md-10">
-						<textarea type="text" id="equiQuery" class="form-control" placeholder="EQ" rows="3"></textarea>
-					</div>
-				</div>
+					<label for="EQuery" class="col-md-6 control-label">EquivalenceQuery &nbsp;<span class="badge" id="equiNum">0</span></label>
+					<label for="EQuery" class="col-md-6 control-label">EQ Pic</label>
+					
 			</div>
 
 			<div class="row" style="height:10px"></div>
 			<div class="row">
-				<div class="form-group">
-					<label for="EQuery" class="col-md-2 control-label">EQ Pic</label>
-					<div class="col-md-10">
-						<div id="displayArea"></div>
+					<div class="col-md-6">
+						<div class="row">
+							<textarea type="text" id="equiQuery" class="form-control" placeholder="EQ" rows="10" ></textarea>
+						</div>
+						<div class="row" style="height:10px"></div>
+						<div class="row">
+							<label class="col-md-12 control-label">Correct Result?(If No, enter a counterexample and click "No")</label>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<button class=" btn-block btn btn-primary" id="EQButtonY" style="margin-top:10px; margin-bottom:10px;" onclick="answerEquivalenceQuery(true);">Yes</button>
+							</div>
+						</div>
+						<div class="row">
+							<label class="control-label col-md-1">stem: </label>
+							<div class="col-md-5">
+								<input class="form-control" id="counterExampleStem" type="text" style="width:95%">
+							</div>
+						
+							<label class="control-label col-md-1" >loop: </label>
+							<div class="col-md-5">
+								<input class="form-control" id="counterExampleLoop" type="text" style=" width:95%">
+							</div>
+						</div>
+						<div class="row" style="height:5px"></div>
+						<div class="row">
+							<div class="col-md-12">
+								<button class=" btn-block btn btn-primary" id="EQButtonN" style="margin-top:10px; margin-bottom:10px;" onclick="answerEquivalenceQuery(false);">No</button>
+							</div>
+						</div>
 					</div>
-				</div>
+					<div class="col-md-6">
+						<div id="displayArea" style=" border-style:dashed; border-color:gray; border-width:1px;"></div>
+					</div>
 			</div>
 
-			<div class="row" style="height:10px"></div>
-			<div class="row">
-				<div class="col-md-2">
-					<label class="control-label">CE stem: </label>
-				</div>
-                <div class="col-md-4">
-					<input class="form-control" id="counterExampleStem" type="text" >
-				</div>
-			</div>
 			<div style="height:10px"></div>
-			<div class="row">
-				<div class="col-md-2">
-						<label class="control-label">CE loop:</label>
-				</div>
-				<div class="col-md-4">
-					<input class="form-control" id="counterExampleLoop" type="text" >
-				</div>
-			</div>
 
-            <div class="row">
-				<div class="form-group">
-					<label class="col-md-2 control-label">Correct Result?</label>
-					<div class="col-md-5">
-						<button class=" btn-block btn btn-primary" id="EQButtonY" style="margin-top:10px; margin-bottom:10px;" onclick="answerEquivalenceQuery(true);">Yes</button>
+            
+			<div class="row">
+					
+					<div class="col-md-6">
+							
 					</div>
-					<div class="col-md-5">
-						<button class=" btn-block btn btn-primary" id="EQButtonN" style="margin-top:10px; margin-bottom:10px;" onclick="answerEquivalenceQuery(false);">No</button>
-					</div>
-				</div>
 			</div>
+		</div>
 		</div>
 	</div>
 
@@ -319,7 +331,7 @@
 	var editor = ace.edit("editor");
    	editor.setTheme("ace/theme/twilight");
 
-	
+	document.getElementById("equiQuery").style.height = document.getElementById("displayArea").style.height;
 </script>
 
 
@@ -327,9 +339,9 @@
 <script src="js/d3.js"></script>
 <script src="./viz.js"></script>
 <script>
-    
-document.getElementById("displayArea").innerHTML = Viz("digraph { a -> b; }");
-    
+
+document.getElementById("displayArea").style.height = "400px";
+
 </script>
 
 <script>
@@ -493,7 +505,12 @@ document.getElementById("displayArea").innerHTML = Viz("digraph { a -> b; }");
 			document.getElementById("equiQuery").value = src;
 			equiNum += 1;
 			document.getElementById("equiNum").innerHTML = equiNum;
+			document.getElementById("displayArea").style.height = "";
 			document.getElementById("displayArea").innerHTML = Viz(src.slice(2));
+			document.getElementById("displayArea").style.textAlign = "center";
+			if(document.getElementById("displayArea").offsetHeight < 400){
+				document.getElementById("displayArea").style.height = "400px";
+			}
 			return 'E';
 		} else if(src[0] == 'S'){
 			illegalInput = 0;

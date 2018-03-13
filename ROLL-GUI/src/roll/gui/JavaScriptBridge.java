@@ -86,7 +86,6 @@ public class JavaScriptBridge extends Region {
 	}
 	
 	public String answerEqui(int isCorrect, String counterExample) throws IOException {
-		//TODO
 		boolean isEqui = (isCorrect == 1) ? true : false;
 		String returnedStr;
 		if(isEqui) {

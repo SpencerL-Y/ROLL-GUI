@@ -44,7 +44,6 @@ public class Interactor {
 	
 	public String startLearning() throws IOException {
 		System.out.println("Interactor start learning");
-		//TODO add the first interaction and return result to the front end
 		String[] args = new String[4];
 		args[0] = this.getMode();
 		args[1] = this.getDataStructure();
@@ -83,7 +82,7 @@ public class Interactor {
 			this.intIn.read(returnedBytes);
 			assert(new String(returnedBytes, 0, len).charAt(0) == 'E');
 			//TODO: change the path when release
-			String pathname = "C:\\Users\\10244\\Desktop\\testFile.txt";
+			String pathname = "testFile.txt";
 			File filename = new File(pathname);
 			InputStreamReader reader = new InputStreamReader(
 						new FileInputStream(filename)
@@ -149,7 +148,6 @@ public class Interactor {
 	}
 
 	public String answerMemQuery(Boolean isMember) throws IOException {
-		//TODO add interaction and return next interaction string to the front end
 		String answerMem = isMember ? "1" : "0";
 		this.intOut.write(answerMem.getBytes());
 		this.intOut.flush();
@@ -165,11 +163,12 @@ public class Interactor {
 			this.intIn.read(returnedBytes);
 			assert(new String(returnedBytes, 0, len).charAt(0) == 'E');
 			//TODO: change the path when release
-			String pathname = "C:\\Users\\10244\\Desktop\\testFile.txt";
+			String pathname = "testFile.txt";
 			File filename = new File(pathname);
 			InputStreamReader reader = new InputStreamReader(
 						new FileInputStream(filename)
 					);
+			@SuppressWarnings("resource")
 			BufferedReader br = new BufferedReader(reader);
 			String line = "";
 			System.out.println("read from file");
@@ -186,7 +185,6 @@ public class Interactor {
 	}
 	
 	public String answerEquiQuery(Boolean isEqual, String ce) throws IOException {
-		//TODO add interaction. return the next interaction if isEqual is false, otherwise end the learning procedure
 		String returnedStr = null;
 		String answerEqui = isEqual ? "1" : "0";
 		System.out.println("input number " + answerEqui);
@@ -217,12 +215,12 @@ public class Interactor {
 		this.intOut.write(ce.getBytes());
 		this.intOut.flush();
 		int len = this.intIn.read(returnedBytes);
+		returnedStr = new String(returnedBytes, 0, len);
 		return returnedStr;
 		
 	}
 	
 	public String equiSyncAck() throws IOException {
-		//TODO this function tell roll that the first line of equivalence check has been received. Return the hypothesis to the front end.
 		this.intOut.write("A-EquiReady".getBytes());
 		this.intOut.flush();
 		byte[] automata = new byte[8192];
