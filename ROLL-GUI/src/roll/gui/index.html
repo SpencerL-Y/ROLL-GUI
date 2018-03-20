@@ -675,7 +675,7 @@ document.getElementById("displayArea").style.height = "400px";
 			autApproach = "error";
 		}
 		var code = editor.getValue();
-		var returnedStr = app.startAutomaticLearning(code);
+		var returnedStr = app.startLearning(autDataStructure, autAlgorithm, autApproach, code);
 		document.getElementById("result").innerHTML = returnedStr;
 	}
 

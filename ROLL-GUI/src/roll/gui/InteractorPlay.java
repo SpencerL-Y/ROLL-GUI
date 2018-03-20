@@ -10,7 +10,7 @@ import java.io.PipedOutputStream;
 
 import roll.main.ROLL;
 
-public class Interactor {
+public class InteractorPlay{
 	private Algorithm a;
 	private Approach push;
 	private DataStructure ds;
@@ -20,14 +20,14 @@ public class Interactor {
 	private PipedOutputStream intOut;
 	public static ROLL roll;
 	
-	public Interactor() {
+	public InteractorPlay() {
 		this.alphabetNumber = new Integer(0);
 		this.a = Algorithm.PERIODIC;
 		this.push = Approach.UNDER;
 		this.ds = DataStructure.TABLE;
 		this.intIn = new PipedInputStream();
 		this.intOut = new PipedOutputStream();
-		Interactor.roll = null;
+		InteractorPlay.roll = null;
 	}
 	
 	public void assignValue(Integer num, char[] letters, Algorithm ago, Approach ap, DataStructure dataStruct) {
@@ -42,7 +42,7 @@ public class Interactor {
 		System.out.println("assign end");
 	}
 	
-	public String startLearning() throws IOException {
+	public String startPlaying() throws IOException {
 		System.out.println("Interactor start learning");
 		String[] args = new String[4];
 		args[0] = this.getMode();
@@ -52,10 +52,10 @@ public class Interactor {
 		for(int i = 0; i < 4; i++) {
 			System.out.print(" " + args[i]);
 		}
-		Interactor.roll = new ROLL(args, this.intIn, this.intOut);
+		InteractorPlay.roll = new ROLL(args, this.intIn, this.intOut);
 		System.out.println();
 		System.out.println("ROLL instance");
-		Interactor.roll.start();
+		InteractorPlay.roll.start();
 		String alphabetStr = "";
 		for(int i = 0; i < this.alphabetNumber; i++) {
 			alphabetStr += alphabetLetters[i];

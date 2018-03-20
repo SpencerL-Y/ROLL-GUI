@@ -14,11 +14,12 @@ import javafx.scene.layout.Region;
 // this class is used to bridge the javascript and java 
 // by using "app.methodname()" in javascript
 public class JavaScriptBridge extends Region {
-	private Interactor interactor;
-	
+	private InteractorPlay interactorPlay;
+	private InteractorLearn interactorLearn;
 	
 	public JavaScriptBridge() {
-		this.interactor = new Interactor();
+		this.interactorPlay = new InteractorPlay();
+		this.interactorLearn = new InteractorLearn();
 	}
 	
 	public void callback(String data) {
@@ -70,26 +71,26 @@ public class JavaScriptBridge extends Region {
 			assert(false);
 		}
 		System.out.println("assign begin");
-		this.interactor = new Interactor();
-		this.interactor.assignValue(alphabetNum, alphabetLetters, a, push, ds);
+		this.interactorPlay = new InteractorPlay();
+		this.interactorPlay.assignValue(alphabetNum, alphabetLetters, a, push, ds);
 		System.out.println("submit return");
-		return this.interactor.startLearning();
+		return this.interactorPlay.startPlaying();
 	}
 	
-	public String startLearning() throws IOException {
+	public String startPlaying() throws IOException {
 		System.out.println("startPlaying");
-		return this.interactor.startLearning();
+		return this.interactorPlay.startPlaying();
 	}
 	
 	public String equiSyncAck() throws IOException {
-		String returnedStr = this.interactor.equiSyncAck();
+		String returnedStr = this.interactorPlay.equiSyncAck();
 		return returnedStr;
 	}
 	
 	public String answerMem(int inLanguage) throws IOException {
 		boolean isMem = inLanguage == 1? true : false;
 		System.out.println("answerMem");
-		String returnedStr = this.interactor.answerMemQuery(isMem);
+		String returnedStr = this.interactorPlay.answerMemQuery(isMem);
 		return returnedStr;
 	}
 	
@@ -101,15 +102,15 @@ public class JavaScriptBridge extends Region {
 		}
 
 		System.out.println("answerEqui");
-		returnedStr = this.interactor.answerEquiQuery(isEqui, counterExample);
+		returnedStr = this.interactorPlay.answerEquiQuery(isEqui, counterExample);
 		return returnedStr;
 	}
 	
 	public String answerEquiAgain(String ce) throws IOException {
-		return this.interactor.answerEquiQueryAgain(ce);
+		return this.interactorPlay.answerEquiQueryAgain(ce);
 	}
 	
-	public String startAutomaticLearning(String autDataStructure, String autAlgorithm, String autApproach, String inputBA) throws UnsupportedEncodingException, FileNotFoundException, IOException {
+	public String startLearning(String autDataStructure, String autAlgorithm, String autApproach, String inputBA) throws UnsupportedEncodingException, FileNotFoundException, IOException {
 		//TODO: add bridge here.
 		DataStructure autDs = DataStructure.TABLE;
 		Algorithm autA = Algorithm.PERIODIC;
@@ -142,7 +143,6 @@ public class JavaScriptBridge extends Region {
 		} else {
 			assert(false);
 		}
-		
 		System.out.println("Input is:");
 		System.out.println(inputBA);
 		try(Writer schreiber = new BufferedWriter(new OutputStreamWriter(
@@ -151,15 +151,20 @@ public class JavaScriptBridge extends Region {
 			schreiber.write(inputBA);
 		}
 		
+		interactorLearn.assignValue(autA, autPush, autDs);
+		interactorLearn.startLearning();
+		
+		
+		
 		
 	
-		//TODO: add interaction with interactor here
+		//TODO: add interaction with interactorPlay here
 		
 		return inputBA;
 	}
 	
 	public void terminate() {
-		this.interactor = null;
+		this.interactorPlay = null;
 	}
 	
 	
