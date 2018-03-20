@@ -121,7 +121,8 @@
 <div id="interactive">
 	<div class="container">
 		<div id="configuration">
-        	<h3>Configure your learning :</h3>
+			<h3>Configure your learning :</h3>
+			<p>Input configurations and click submit button to start playing as teacher</p>
             <div class="form-group">
 				<div class="row" style="height:15px"></div>
 				<div class="row">
@@ -284,21 +285,65 @@
 		<div class="marpad">
 			<h2 class="marpad">Automatic Learning</h2>
 			<p class="marpad">Input your automata in BA format and the learning process will be executed automaticly. </p>
+			<div class="form-group">
+				<div class="row" style="height:15px"></div>
+				<div class="row">
+                    <label class="col-md-2 control-label">Data Structure</label>
+                    <div class="col-md-10">
+						<div class="col-md-2">
+							<input id="autTable" type="radio" name="autDataStructure" /> Table
+						</div>
+						<div class="col-md-2">
+							<input id="autTree" type="radio" name="autDataStructure" /> Tree
+						</div>
+                    </div>
+				</div>
+				<div class="row" style="height:15px"></div>
+				<div class="row">
+					<label class="col-md-2 control-label">Algorithm</label>
+					<div class="col-md-10">
+						<div class="col-md-2">
+							<input id="autPeriodic" type="radio" name="autAlgorithm" value="Periodic" /> Periodic
+						</div>
+						<div class="col-md-2">
+							<input id="autSyntactic" type="radio" name="autAlgorithm" value="Syntactic"/> Syntactic
+						</div>
+						<div class="col-md-2">
+							<input id="autRecurrent" type="radio" name="autAlgorithm" value="Recurrent" /> Recurrent
+						</div>
+						<div class="col-md-2">
+							<input id="autLdollar" type="radio" name="autAlgorithm" value="LDollar"/> LDollar
+						</div>
+					</div> 
+				</div>
+				<div class="row" style="height:15px"></div>
+				<div class="row">
+					<label class="col-md-2 control-label">Approach Method</label>
+					<div class="col-md-10">
+						<div class="col-md-2">
+							<input id="autUnder" type="radio" name="autApproach" value="Under" /> Under
+						</div>
+						<div class="col-md-2">
+							<input id="autOver" type="radio" name="autApproach" value="Over"/> Over
+						</div>
+					</div> 
+				</div>
+				<div class="row" style="height:15px"></div>
+			</div>
 		</div>
 		<div class="row">
     		<div class="col-md-6">
         		<div class="marpad" id="out"> 
             		<label class="pad  midiumfont">Automata Input :</label>
-					<button class="btn pull-right btn-primary mar" style="width:30%;margin-bottom" id="autoRun">Run</button>
+					<button class="btn pull-right btn-primary mar" style="width:30%;margin-bottom" id="autoRun" onclick="startLearning();">Run</button>
 					<pre id="editor" class="mar" style="height:600px;"></pre>
                 </div>
 			</div> 
 		
         	<div class="col-md-6">
         		<div class="marpad">
-            	<label class="pad midiumfont">Result :</label>
-                <div>
-					<pre id="result" class="mar" style=" height:600px; "></pre>
+            		<label class="pad midiumfont">Result :</label>
+					<pre id="result" class="mar" style=" height:300px; "></pre>
                 </div>
             </div>
 		</div>
@@ -330,6 +375,7 @@
 	//ace editor
 	var editor = ace.edit("editor");
    	editor.setTheme("ace/theme/twilight");
+	editor.session.setMode("ace/mode/java")
 
 	document.getElementById("equiQuery").style.height = document.getElementById("displayArea").style.height;
 </script>
@@ -381,6 +427,9 @@ document.getElementById("displayArea").style.height = "400px";
    	document.getElementById("table").checked = true;
 	document.getElementById("periodic").checked = true;
 	document.getElementById("under").checked = true;
+	document.getElementById("autTable").checked = true;
+	document.getElementById("autPeriodic").checked = true;
+	document.getElementById("autUnder").checked = true;
 	document.getElementById("MQButtonY").disabled = "disabled";
 	document.getElementById("MQButtonN").disabled = "disabled";
 	document.getElementById("EQButtonY").disabled = "disabled";
@@ -589,11 +638,46 @@ document.getElementById("displayArea").style.height = "400px";
 
 
 	/*-----------------------Automatic Learning-------------------------*/
-	function startLearning(){
-		
-	}
 
+
+	function startLearning(){
+		//get data structure
+		var autDataStructure = "table";
+		if(document.getElementById("autTree").checked){
+			autDataStructure = "tree";
+		} else if(document.getElementById("autTable").checked){
+			autDataStructure = "table";
+		} else {//
+			autDataStructure = "error";
+		}
 	
+		//get algorithm 
+		var autAlgorithm = "periodic";
+		if(document.getElementById("autPeriodic").checked){
+			autAlgorithm = "periodic";
+		} else if(document.getElementById("autSyntactic").checked) {
+			autAlgorithm = "syntactic";
+		} else if(document.getElementById("autRecurrent").checked) {
+			autAlgorithm = "recurrent";
+		} else if(document.getElementById("autLdollar").checked){
+			autAlgorithm = "ldollar";
+		} else {
+			autAlgorithm = "error";
+		}
+	
+		//get approach method
+		var autApproach = "under";
+		if(document.getElementById("autUnder").checked){
+			autApproach = "under";
+		} else if(document.getElementById("autOver").checked){
+			autApproach = "over";
+		} else {
+			autApproach = "error";
+		}
+		var code = editor.getValue();
+		var returnedStr = app.startAutomaticLearning(code);
+		document.getElementById("result").innerHTML = returnedStr;
+	}
 
 
 			

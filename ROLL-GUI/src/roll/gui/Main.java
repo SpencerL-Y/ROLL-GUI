@@ -3,7 +3,6 @@ package roll.gui;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -17,6 +16,7 @@ public class Main extends Application {
     	stage.setTitle("ROLL");
         BorderPane borderPane = new BorderPane();
         WebView webView = new WebView();
+        //webpage of the interface
         String url = getClass().getResource("index.html").toExternalForm();
         System.out.println(url);
         webView.getEngine().load(url);
@@ -33,7 +33,7 @@ public class Main extends Application {
         bridge = new JavaScriptBridge();
         window.setMember("app", bridge);
     }
-
+    //entrance of the interface
     public static void main(String[] args) {
         launch(args);
     }

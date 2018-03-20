@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/roll-library"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/roll-library-for-gui"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/BA2DOT"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

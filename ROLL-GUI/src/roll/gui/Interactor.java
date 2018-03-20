@@ -228,4 +228,7 @@ public class Interactor {
 		String automataStr = new String(automata, 0, len);
 		return automataStr;
 	}
+	
+	
+	
 }
