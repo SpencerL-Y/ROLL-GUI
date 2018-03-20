@@ -1,7 +1,11 @@
 package roll.gui;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -10,9 +14,26 @@ import netscape.javascript.JSObject;
 
 public class Main extends Application {
 	public JavaScriptBridge bridge;
+	private double xOffset = 0;
+	private double yOffset = 0;
     @Override
     public void start(Stage stage) throws Exception {
+    	Parent root = FXMLLoader.load(getClass().getResource("ROLL-GUI-border.fxml"));
     	stage.initStyle(StageStyle.DECORATED);
+    	root.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                xOffset = event.getSceneX();
+                yOffset = event.getSceneY();
+            }
+        });
+    	root.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                stage.setX(event.getScreenX() - xOffset);
+                stage.setY(event.getScreenY() - yOffset);
+            }
+        });
     	stage.setTitle("ROLL");
         BorderPane borderPane = new BorderPane();
         WebView webView = new WebView();

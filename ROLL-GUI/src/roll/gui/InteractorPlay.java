@@ -18,7 +18,7 @@ public class InteractorPlay{
 	private Integer alphabetNumber;
     private PipedInputStream intIn;
 	private PipedOutputStream intOut;
-	public static ROLL roll;
+	public ROLL roll;
 	
 	public InteractorPlay() {
 		this.alphabetNumber = new Integer(0);
@@ -27,7 +27,7 @@ public class InteractorPlay{
 		this.ds = DataStructure.TABLE;
 		this.intIn = new PipedInputStream();
 		this.intOut = new PipedOutputStream();
-		InteractorPlay.roll = null;
+		this.roll = null;
 	}
 	
 	public void assignValue(Integer num, char[] letters, Algorithm ago, Approach ap, DataStructure dataStruct) {
@@ -52,10 +52,10 @@ public class InteractorPlay{
 		for(int i = 0; i < 4; i++) {
 			System.out.print(" " + args[i]);
 		}
-		InteractorPlay.roll = new ROLL(args, this.intIn, this.intOut);
+		this.roll = new ROLL(args, this.intIn, this.intOut);
 		System.out.println();
 		System.out.println("ROLL instance");
-		InteractorPlay.roll.start();
+		this.roll.start();
 		String alphabetStr = "";
 		for(int i = 0; i < this.alphabetNumber; i++) {
 			alphabetStr += alphabetLetters[i];

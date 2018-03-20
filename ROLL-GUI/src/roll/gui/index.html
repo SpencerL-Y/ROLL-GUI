@@ -282,9 +282,9 @@
 
 <!--automatic mode-->
 	<div id="automatic" class="container" hidden="hidden">
-		<div class="marpad">
-			<h2 class="marpad">Automatic Learning</h2>
-			<p class="marpad">Input your automata in BA format and the learning process will be executed automaticly. </p>
+		<div>
+			<h3>Automatic Learning</h3>
+			<p>Input your automata in BA format and the learning process will be executed automaticly. </p>
 			<div class="form-group">
 				<div class="row" style="height:15px"></div>
 				<div class="row">
@@ -329,23 +329,40 @@
 					</div> 
 				</div>
 				<div class="row" style="height:15px"></div>
+				<div class="row">
+					<label class="col-md-2 control-label">Status</label>
+					<div class="col-md-8">
+						<h4 id="autInfoStatus" style="text-align:center; font-family:Courier New, Courier, monospace; " >Currently Nothing</h4>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div class="row">
     		<div class="col-md-6">
-        		<div class="marpad" id="out"> 
+        		<div id="out"> 
             		<label class="pad  midiumfont">Automata Input :</label>
 					<button class="btn pull-right btn-primary mar" style="width:30%;margin-bottom" id="autoRun" onclick="startLearning();">Run</button>
-					<pre id="editor" class="mar" style="height:600px;"></pre>
+					<pre id="editor" class="mar" style="height:400px;"></pre>
                 </div>
 			</div> 
 		
         	<div class="col-md-6">
-        		<div class="marpad">
-            		<label class="pad midiumfont">Result :</label>
-					<pre id="result" class="mar" style=" height:300px; "></pre>
+        		<div>
+            		<label class="pad midiumfont">Textual Input & Result :</label>
+					<pre id="result" class="mar" style=" height:400px; "></pre>
                 </div>
             </div>
+		</div>
+		<div class="row" style="height: 15px"></div>
+		<div class="row">
+			<div class="col-md-6">
+				<label class="pad midiumfont">Input:</label>
+				<div id="autInputPic" class="mar" style="height: 300px; border:1px; border-color:darkgray;border-style:dashed;"></div>
+			</div>  			
+			<div class="col-md-6">
+				<label class="pad midiumfont">Output:</label>
+				<div id="autOutputPic" class="mar" style="height: 300px; border:1px; border-color:darkgray;border-style:dashed;"></div>
+			</div>  
 		</div>
     </div>	
 </div>
@@ -376,7 +393,7 @@
 	var editor = ace.edit("editor");
    	editor.setTheme("ace/theme/twilight");
 	editor.session.setMode("ace/mode/java")
-
+	editor.setValue("[0]\na,[0]->[1]\na,[1]->[1]\na,[0]->[2]\nb,[2]->[2]\n[1]\n[2]", 1);
 	document.getElementById("equiQuery").style.height = document.getElementById("displayArea").style.height;
 </script>
 
@@ -677,9 +694,22 @@ document.getElementById("displayArea").style.height = "400px";
 		var code = editor.getValue();
 		var returnedStr = app.startLearning(autDataStructure, autAlgorithm, autApproach, code);
 		document.getElementById("result").innerHTML = returnedStr;
+		returnedAutomata = returnedStr.split("|");
+		document.getElementById("autInputPic").innerHTML = returnedAutomata[0];
+		document.getElementById("autOutputPic").innerHTML = returnedAutomata[1];
+		document.getElementById("autInputPic").style.textAlign = "center";
+		document.getElementById("autOutputPic").style.textAlign = "center";
+		if(document.getElementById("autInputPic").offsetHeight < 300 || 
+			document.getElementById("autOutputPic").offsetHeight < 300){
+			document.getElementById("autInputPic").style.height = "300px";
+			document.getElementById("autOutputPic").style.height = "300px";
+		}
+
 	}
 
+	function checkBAFormat(code){
 
+	}
 			
 	</script>
 	

@@ -1,9 +1,13 @@
 package roll.gui;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
@@ -152,15 +156,42 @@ public class JavaScriptBridge extends Region {
 		}
 		
 		interactorLearn.assignValue(autA, autPush, autDs);
-		interactorLearn.startLearning();
+		String complete = interactorLearn.startLearning();
+		System.out.println(complete);
+		String returnedStr = "";
+		//TODO: change path when release
+		String pathname = "C:\\Users\\10244\\Desktop\\inputBA.txt";
+		File filename = new File(pathname);
+		InputStreamReader reader = new InputStreamReader(
+					new FileInputStream(filename)
+				);
+		@SuppressWarnings("resource")
+		BufferedReader br = new BufferedReader(reader);
+		String line = "";
+		while(line != null) {
+			returnedStr +=  line;
+			returnedStr += '\n';
+			System.out.print(line);
+			line = br.readLine();
+		}
 		
+		returnedStr += '|';
 		
+		pathname = "C:\\Users\\10244\\Desktop\\outputBA.txt";
+		filename = new File(pathname);
+		reader = new InputStreamReader(
+				new FileInputStream(filename)
+			);
+		br = new BufferedReader(reader);
+		line = "";
+		while(line != null) {
+			returnedStr +=  line;
+			returnedStr += '\n';
+			System.out.print(line);
+			line = br.readLine();
+		}
 		
-		
-	
-		//TODO: add interaction with interactorPlay here
-		
-		return inputBA;
+		return returnedStr;
 	}
 	
 	public void terminate() {

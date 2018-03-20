@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
+import main.Converter;
 import roll.main.ROLL;
 
 public class InteractorLearn{
@@ -13,7 +14,7 @@ public class InteractorLearn{
 	private String BAPath;
     private PipedInputStream intIn;
 	private PipedOutputStream intOut;
-	public static ROLL roll;
+	public ROLL roll;
 	
 	public InteractorLearn(){
 		this.a = Algorithm.PERIODIC;
@@ -23,7 +24,7 @@ public class InteractorLearn{
 		this.intOut = new PipedOutputStream();
 		//TODO: change path when release
 		this.BAPath = "C:\\Users\\10244\\Desktop\\inputBA.ba";
-		InteractorLearn.roll = null;
+		this.roll = null;
 	}
 	
 	public void assignValue(Algorithm ago, Approach ap, DataStructure dataStruct) {
@@ -44,11 +45,20 @@ public class InteractorLearn{
 		for(int i = 0; i < 5; i++) {
 			System.out.print(" " + args[i]);
 		}
-		InteractorLearn.roll = new ROLL(args, this.intIn, this.intOut);
+		this.roll = new ROLL(args, this.intIn, this.intOut);
 		System.out.println();
 		System.out.println("ROLL instance");
-		InteractorLearn.roll.start();
-		return null;
+		this.roll.start();
+		byte[] bytes = new byte[1024];
+		int len = this.intIn.read(bytes);
+		String ackStr = new String(bytes, 0, len);
+		if(ackStr.toCharArray()[0] == 'C') {
+			System.out.println("Enter C-Complete");
+			//change path when release
+			Converter.BA2DOTWithName("C:\\Users\\10244\\Desktop\\outputBA.ba", "C:\\Users\\10244\\Desktop\\outputBA.txt", "outputAut");
+			Converter.BA2DOTWithName("C:\\Users\\10244\\Desktop\\inputBA.ba", "C:\\Users\\10244\\Desktop\\inputBA.txt", "inputAut");
+		}
+		return "Learning Complished";
 	}
 	
 	private String getApproach() {
