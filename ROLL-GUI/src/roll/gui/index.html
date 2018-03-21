@@ -121,7 +121,7 @@
 <div id="interactive">
 	<div class="container">
 		<div id="configuration">
-			<h3>Configure your learning :</h3>
+			<h3>Configure the Learning :</h3>
 			<p>Input configurations and click submit button to start playing as teacher</p>
             <div class="form-group">
 				<div class="row" style="height:15px"></div>
@@ -354,14 +354,18 @@
             </div>
 		</div>
 		<div class="row" style="height: 15px"></div>
-		<div class="row">
+		<div class="row" >
 			<div class="col-md-6">
 				<label class="pad midiumfont">Input:</label>
-				<div id="autInputPic" class="mar" style="height: 300px; border:1px; border-color:darkgray;border-style:dashed;"></div>
+				<div  id="autI" style=" border:1px; border-color:darkgray;border-style:dashed;">
+					<div id="autInputPic" class="mar" ></div>
+				</div>
 			</div>  			
 			<div class="col-md-6">
 				<label class="pad midiumfont">Output:</label>
-				<div id="autOutputPic" class="mar" style="height: 300px; border:1px; border-color:darkgray;border-style:dashed;"></div>
+				<div id="autO" style=" border:1px; border-color:darkgray;border-style:dashed;">
+					<div id="autOutputPic" class="mar"></div>
+				</div>
 			</div>  
 		</div>
     </div>	
@@ -636,6 +640,7 @@ document.getElementById("displayArea").style.height = "400px";
 		} else {
 			document.getElementById("infoStatus").innerHTML = "ERROR: Alphabet size is wrong, please input again. Size: " + alphaNum;
 			//textBlink();
+			document.getElementById("submitAlpha").disabled = "";
 			return null;
 		}
 		return returnStr;
@@ -694,16 +699,23 @@ document.getElementById("displayArea").style.height = "400px";
 		var code = editor.getValue();
 		var returnedStr = app.startLearning(autDataStructure, autAlgorithm, autApproach, code);
 		document.getElementById("result").innerHTML = returnedStr;
-		returnedAutomata = returnedStr.split("|");
-		document.getElementById("autInputPic").innerHTML = returnedAutomata[0];
-		document.getElementById("autOutputPic").innerHTML = returnedAutomata[1];
+		document.getElementById("autInputPic").innerHTML = Viz(returnedStr.split("|")[0]);
+		document.getElementById("autOutputPic").innerHTML = Viz(returnedStr.split("|")[1]);
 		document.getElementById("autInputPic").style.textAlign = "center";
 		document.getElementById("autOutputPic").style.textAlign = "center";
-		if(document.getElementById("autInputPic").offsetHeight < 300 || 
+		if(document.getElementById("autInputPic").offsetHeight < 300 && 
 			document.getElementById("autOutputPic").offsetHeight < 300){
 			document.getElementById("autInputPic").style.height = "300px";
 			document.getElementById("autOutputPic").style.height = "300px";
+		} else {
+			if(document.getElementById("autI").offsetHeight > document.getElementById("autO").offsetHeight){
+				document.getElementById("autO").height = document.getElementById("autI").offsetHeight;
+			} else {
+				document.getElementById("autI").height = document.getElementById("autO").offsetHeight;
+				
+			}
 		}
+		document.getElementById("autInfoStatus").innerHTML = "Learning Complished";
 
 	}
 
