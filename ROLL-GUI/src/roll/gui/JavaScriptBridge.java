@@ -115,7 +115,7 @@ public class JavaScriptBridge extends Region {
 	}
 	
 	public String startLearning(String autDataStructure, String autAlgorithm, String autApproach, String inputBA) throws UnsupportedEncodingException, FileNotFoundException, IOException {
-		//TODO: add bridge here.
+		this.interactorLearn = new InteractorLearn();
 		DataStructure autDs = DataStructure.TABLE;
 		Algorithm autA = Algorithm.PERIODIC;
 		Approach autPush = Approach.UNDER;
@@ -176,7 +176,7 @@ public class JavaScriptBridge extends Region {
 		}
 		
 		returnedStr += '|';
-		
+		//TODO: change path when release
 		pathname = "C:\\Users\\10244\\Desktop\\outputBA.txt";
 		filename = new File(pathname);
 		reader = new InputStreamReader(
